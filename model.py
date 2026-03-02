@@ -1,51 +1,51 @@
+import os
 import sqlalchemy as sq
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from dotenv import load_dotenv
+
+load_dotenv()
 
 Base = declarative_base()
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = sq.Column(sq.Integer, primary_key=True)
+    chat_id = sq.Column(sq.BigInteger, unique=True, nullable=False)
+    total_answers = sq.Column(sq.Integer, default=0)
+    correct_answers = sq.Column(sq.Integer, default=0)
 
 
 class CommonWord(Base):
     __tablename__ = "common_words"
     id = sq.Column(sq.Integer, primary_key=True)
-    word = sq.Column(sq.String(length = 40), unique=True, nullable=False)
-    translate = sq.Column(sq.String(length = 40), nullable=False)
+    target_word = sq.Column(sq.String(100), nullable=False)
+    translate_word = sq.Column(sq.String(100), nullable=False)
 
 
 class UserWord(Base):
     __tablename__ = "user_words"
     id = sq.Column(sq.Integer, primary_key=True)
-    user_id = sq.Column(sq.BigInteger, nullable=False)
-    word = sq.Column(sq.String(length = 40), nullable=False)
-    translate = sq.Column(sq.String(length = 40), nullable=False)
+
+    # Внешние ключи (колонки)
+    user_id = sq.Column(sq.Integer, sq.ForeignKey("users.id", ondelete="CASCADE"))
+    word_id = sq.Column(sq.Integer, sq.ForeignKey("common_words.id", ondelete="CASCADE"))
+
     is_deleted = sq.Column(sq.Boolean, default=False)
 
-    __table_args__ = (sq.UniqueConstraint('user_id', 'word'),)
+    # Отношения (Объекты для удобства доступа в Python)
+    # Называем их иначе, чтобы не было конфликта с именами колонок!
+    user_rel = relationship(User, backref="u_words")
+    word_rel = relationship(CommonWord, backref="w_users")
 
 
-DSN = ''
-engine = sq.create_engine(
-    DSN,
-    client_encoding='utf8'
-)
-Base.metadata.create_all(engine)
-
+# Настройка БД
+DSN = os.getenv("DSN")
+engine = sq.create_engine(DSN)
 Session = sessionmaker(bind=engine)
 
-# Функция для получения всех доступных слов для пользователя
-def get_all_words_for_user(user_id):
-    session = Session()
-    # Берём общие слова + слова пользователя, исключаем удалённые
-    common = session.query(CommonWord.word, CommonWord.translate).all()
-    user = session.query(UserWord.word, UserWord.translate)\
-        .filter(UserWord.user_id == user_id, UserWord.is_deleted == False).all()
 
-    deleted = [w[0] for w in session.query(UserWord.word).filter(UserWord.user_id == user_id, UserWord.is_deleted == True).all()]
-
-    all_words = []
-    for w in common:
-        if w.word not in deleted:
-            all_words.append(w)
-    all_words.extend(user)
-
-    session.close()
-    return all_words
+def create_db():
+    # Удаляем и создаем заново, чтобы структура точно обновилась
+    #Base.metadata.drop_all(engine) # Раскомментируй один раз, если ошибка останется
+    Base.metadata.create_all(engine)

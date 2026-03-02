@@ -1,14 +1,14 @@
 [
-  {"model": "words", "pk": 1, "fields": {"word": "cat", "correct_translate": "кошка", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 2, "fields": {"word": "dog", "translate": "собака", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 3, "fields": {"word": "hello", "translate": "привет", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 4, "fields": {"word": "world", "translate": "мир", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 5, "fields": {"word": "open", "translate": "открыть", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 6, "fields": {"word": "connection", "translate": "подключение", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 7, "fields": {"word": "word", "translate": "слово", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 8, "fields": {"word": "parrot", "translate": "попугай", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 9, "fields": {"word": "install", "translate": "установка", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}},
-  {"model": "words", "pk": 10, "fields": {"word": "delete", "translate": "удалить", "fake_translate_1": "яблоко", "fake_translate_2": "солнце", "fake_translate_3": "солнце"}}
+  {"model": "words", "pk": 1, "fields": {"target_word": "cat", "translate_word": "кошка"}},
+  {"model": "words", "pk": 2, "fields": {"target_word": "dog", "translate_word": "собака"}},
+  {"model": "words", "pk": 3, "fields": {"target_word": "hello", "translate_word": "привет"}},
+  {"model": "words", "pk": 4, "fields": {"target_word": "world", "translate_word": "мир"}},
+  {"model": "words", "pk": 5, "fields": {"target_word": "open", "translate_word": "открыть"}},
+  {"model": "words", "pk": 6, "fields": {"target_word": "connection", "translate_word": "подключение"}},
+  {"model": "words", "pk": 7, "fields": {"target_word": "word", "translate_word": "слово"}},
+  {"model": "words", "pk": 8, "fields": {"target_word": "parrot", "translate_word": "попугай"}},
+  {"model": "words", "pk": 9, "fields": {"target_word": "install", "translate_word": "установка"}},
+  {"model": "words", "pk": 10, "fields": {"target_word": "delete", "translate_word": "удалить"}}
 ]
 
 

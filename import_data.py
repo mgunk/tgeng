@@ -14,19 +14,18 @@ for record in data:
         fields = record.get('fields', {})
 
         # Исправляем опечатку в первом поле
-        if 'correct_translate' in fields:
-            translate = fields['correct_translate']
+        if 'translate_word' in fields:
+            translate_word = fields['translate_word']
         else:
-            translate = fields['translate']
+            translate_word = fields['translate_word']
 
-        word = fields['word']
+        target_word = fields['target_word']
 
-        print(f'Импортирую: {word} -> {translate}')
+        print(f'Импортирую: {target_word} -> {translate_word}')
 
         session.add(CommonWord(
-            word=word,
-            translate=translate
+            target_word=target_word,
+            translate_word=translate_word
         ))
 
 session.commit()
-session.close()
